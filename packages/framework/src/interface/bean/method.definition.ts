@@ -1,3 +1,1 @@
-export interface IMethodDefinition {
-
-}
+export interface IMethodDefinition {}

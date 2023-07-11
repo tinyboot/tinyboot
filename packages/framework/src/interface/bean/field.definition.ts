@@ -1,3 +1,1 @@
-export interface IFieldDefinition {
-
-}
+export interface IFieldDefinition {}

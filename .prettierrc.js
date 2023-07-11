@@ -1,4 +1,4 @@
 module.exports = {
-  ...require('./node_modules/@tinydi/style/.prettierrc.json'),
+  ...require('./node_modules/@tiny-boot/style/.prettierrc.json'),
   printWidth: 180
 }

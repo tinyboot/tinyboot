@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@tinydi/style/.eslintrc.json",
+  "extends": "./node_modules/@tiny-boot/style/.eslintrc.json",
   "ignorePatterns": ["node_modules", "packages/version", "dist", "test", "jest.config.js"],
   "rules": {
     "no-control-regex": "off",
