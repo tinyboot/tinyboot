@@ -7,6 +7,7 @@ import { IBeanFactory } from '../interface/bean/bean.factory';
 import { BeanFactory } from '../bean/bean.factory';
 import { Identifier } from '../interface/common/identifier';
 import { BeanRegister } from '../bean/bean.register';
+import { Types } from '../utils/types.utils';
 
 export abstract class AbstractApplicationContext implements IApplicationContext {
   parent: this;
@@ -22,13 +23,18 @@ export abstract class AbstractApplicationContext implements IApplicationContext 
   set beanRegistry(value: IBeanRegistry<IFieldDefinition, IMethodDefinition, IBeanDefinition<IFieldDefinition, IMethodDefinition>>) {
     this._beanRegistry = value;
   }
+
   get beanFactory(): IBeanFactory<IFieldDefinition, IMethodDefinition, IBeanDefinition<IFieldDefinition, IMethodDefinition>> {
     if (!this._beanFactory) {
       this._beanFactory = new BeanFactory();
     }
     return this._beanFactory;
   }
+
   set beanFactory(value: IBeanFactory<IFieldDefinition, IMethodDefinition, IBeanDefinition<IFieldDefinition, IMethodDefinition>>) {
     this._beanFactory = value;
   }
+
+  bind(identifier: Identifier, target: any);
+  bind(identifier: Identifier, target: any, options?: Partial<IBeanDefinition<IFieldDefinition, IMethodDefinition>>) {}
 }

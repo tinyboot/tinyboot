@@ -1,8 +1,9 @@
-import { IBeanRegistry, IIdentifierRelation } from '../interface/bean/bean.registry';
+import { IBeanRegistry } from '../interface/bean/bean.registry';
 import { IBeanDefinition } from '../interface/bean/bean.definition';
 import { IFieldDefinition } from '../interface/bean/field.definition';
 import { IMethodDefinition } from '../interface/bean/method.definition';
 import { Identifier } from '../interface/common/identifier';
+import { IBeanRelation } from '../interface/bean/bean.relation';
 
 export class BeanRegister<F extends IFieldDefinition, M extends IMethodDefinition, T extends IBeanDefinition<F, M>> implements IBeanRegistry<F, M, T> {
   // private singletons: IBeanDefinition<F, M> = [];
@@ -23,11 +24,11 @@ export class BeanRegister<F extends IFieldDefinition, M extends IMethodDefinitio
 
   registerBeanDefinition(identifier: Identifier, beanDefinition: T) {}
 
-  get identifierRelation(): IIdentifierRelation {
+  get beanRelation(): IBeanRelation {
     return this._identifierRelation;
   }
 
-  set identifierRelation(value: IIdentifierRelation) {
+  set beanRelation(value: IBeanRelation) {
     this._identifierRelation = value;
   }
 }
