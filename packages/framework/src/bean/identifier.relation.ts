@@ -1,7 +1,7 @@
 import { Identifier } from '../interface/common/identifier';
-import { IBeanRelation } from '../interface/bean/bean.relation';
+import { IIdentifierRelation } from '../interface/bean/identifier.relation';
 
-export class BeanRelationships extends Map<Identifier, string> implements IBeanRelation {
+export class IdentifierRelationships extends Map<Identifier, string> implements IIdentifierRelation {
   getRelation(identifier: Identifier): string {
     return '';
   }

@@ -7,6 +7,12 @@ import { IMethodDefinition } from './method.definition';
 
 export interface IBeanDefinition<T extends IFieldDefinition, M extends IMethodDefinition> {
   /**
+   * bean namespace
+   * @type {string}
+   * @memberof IBeanDefinition
+   */
+  namespace?: string;
+  /**
    * bean identifier
    * @type {Identifier}
    * @memberof IBeanDefinition

@@ -1,4 +1,5 @@
 import { SymbolMetadata } from './symbol.utils';
+import { IComponent } from '../interface/common/component';
 
 export namespace Types {
   const anon = /^function\s+\(|^function\s+anonymous\(|^\(?(\w+,)*\w+\)?\s*\=\>|^\(\s*\)\s*\=\>/;
@@ -88,6 +89,10 @@ export namespace Types {
     }
 
     return true;
+  }
+
+  export function isComponent(target: any): boolean {
+    return !!target?.identifier && !!target?.provider && isFunction(target.provider);
   }
 }
 

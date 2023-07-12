@@ -1,6 +1,6 @@
 import { Identifier } from '../common/identifier';
 
-export interface IBeanRelation {
+export interface IIdentifierRelation {
   saveClassRelation(target: any, namespace?: string);
 
   saveFactoryRelation(identifier: Identifier, uuid: string);
