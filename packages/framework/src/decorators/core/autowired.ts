@@ -42,7 +42,7 @@ export interface AutowiredDecorator {
    *    }
    * }
    */
-  (providers: ProviderIdentifier[]): ClassMethodDecoratorFunction<any, any, any>;
+  (providers?: ProviderIdentifier[]): ClassMethodDecoratorFunction<any, any, any>;
   /**
    * autowired decorator
    * @param metadata
@@ -63,7 +63,7 @@ export interface AutowiredDecorator {
    * @Autowired
    * userService: UserService;
    */
-  (target: any, context: ClassFieldDecoratorContext): void;
+  (target: any, context: ClassFieldDecoratorContext | ClassMethodDecoratorContext): void;
 }
 export const Autowired: AutowiredDecorator = createDecorator((target, context, provider) => {
   switch (context.kind) {

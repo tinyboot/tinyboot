@@ -4,6 +4,7 @@ import { SymbolMetadata } from '../src/utils/symbol.utils';
 import { Store } from '../src/decorators/store';
 import { GenericApplicationContext } from '../src/context/generic-application-context';
 import { IComponent } from '../src/interface/common/component';
+import { Init } from '../src/decorators/core/definitions';
 
 @Injectable()
 export class Cat {}
@@ -12,10 +13,13 @@ export class Cat {}
 export class Dog {}
 @Injectable()
 export class Zoo {
-  @Autowired()
-  dog: Dog;
-  @Autowired()
   cat: Cat;
+  dog: Dog;
+  @Autowired
+  have(cat: Cat, dog: Dog) {
+    this.cat = cat;
+    this.dog = dog;
+  }
 }
 
 const component: IComponent = {

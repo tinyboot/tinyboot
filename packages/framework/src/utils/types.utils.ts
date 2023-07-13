@@ -72,6 +72,17 @@ export namespace Types {
   export function isFunction(value) {
     return typeof value === 'function';
   }
+
+  /**
+   * check target is async function or not.
+   *
+   * @export
+   * @param {*} value
+   * @returns {boolean}
+   */
+  export function isAsyncFunction(value) {
+    return toStr.call(value) === '[object AsyncFunction]';
+  }
   /**
    * is options object or not.
    *

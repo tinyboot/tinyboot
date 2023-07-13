@@ -11,11 +11,12 @@ import { Types } from '../utils/types.utils';
 import { IIdentifierRelation } from '../interface/bean/identifier.relation';
 import { IdentifierRelationships } from '../bean/identifier.relation';
 import { Store } from '../decorators/store';
-import getProviderMetadata = Store.getProviderMetadata;
 import { Scope } from '../enums/scope.enum';
 import { generateUUID } from '../utils/uui.utils';
 import { IComponent } from '../interface/common/component';
 import { FACTORY_PROVIDER } from '../constant/constant';
+import { BeanDefinition } from '../bean/bean.definition';
+import { BeanType } from '../enums/bean-type.enum';
 
 export abstract class AbstractApplicationContext implements IApplicationContext {
   parent: IApplicationContext;
@@ -61,6 +62,32 @@ export abstract class AbstractApplicationContext implements IApplicationContext 
       return this.registerProvider(identifier, target);
     }
     if (this.beanRegistry.hasBeanDefinition(identifier)) return;
+    if (options.registerHook) options.registerHook(target, options);
+    const definition: IBeanDefinition<IFieldDefinition, IMethodDefinition> = new BeanDefinition();
+    if (Types.isClass(target)) {
+      definition.name = Store.getProviderMetadata(target)?.name;
+      definition.type = BeanType.Class;
+    } else {
+      definition.type = BeanType.Factory;
+      definition.asynchronous = Types.isAsyncFunction(target);
+      definition.name = target.identifier;
+    }
+    definition.target = target;
+    definition.identifier = identifier;
+    definition.path = options?.path || null;
+    definition.namespace = options?.namespace || '';
+    definition.scope = options?.scope || Scope.Request;
+    // field
+    const fields = Store.getInjectFieldsMetadata(target);
+    if (fields) {
+      console.log(fields.keys());
+      for (const fieldKey of Array.from(fields.keys())) {
+        const field = fields.get(fieldKey);
+        const fieldDefinition: IFieldDefinition = Object.assign({}, field);
+        definition.fields.setField(field.propertyKey, fieldDefinition);
+      }
+    }
+    // method
   }
   get<T>(): T {
     return null;
@@ -84,38 +111,39 @@ export abstract class AbstractApplicationContext implements IApplicationContext 
 
   protected registerProvider(provider: any, options: Partial<IBeanDefinition<IFieldDefinition, IMethodDefinition>> = {}): void {
     if (Types.isClass(provider)) {
-      const providerMetadata = getProviderMetadata(provider);
+      const providerMetadata = Store.getProviderMetadata(provider);
       if (providerMetadata && providerMetadata.uuid) {
         this.identifierRelation.saveClassRelation(provider, options?.namespace);
-        this.register(providerMetadata.uuid, module, options);
+        this.register(providerMetadata.uuid, provider, options);
       }
     } else if (Types.isComponent(provider)) {
-      if (!provider.scope) {
-        provider.scope = Scope.Request;
+      const component: IComponent = provider as IComponent;
+      if (!component.scope) {
+        component.scope = Scope.Request;
       }
-      Object.defineProperty(provider.provider, FACTORY_PROVIDER, {
-        value: provider,
+      Object.defineProperty(component.provider, FACTORY_PROVIDER, {
+        value: component,
         writable: false,
       });
       const uuid = generateUUID();
-      this.identifierRelation.saveFactoryRelation(provider.identifier, uuid);
-      this.register(uuid, provider, {
-        scope: provider.scope,
+      this.identifierRelation.saveFactoryRelation(component.identifier, uuid);
+      this.register(uuid, component, {
+        scope: component.scope,
         namespace: options.namespace,
-        _target: options._target,
+        target: options.target,
       });
     } else if (Types.isFunction(provider)) {
-      const info: IComponent = module[FACTORY_PROVIDER];
-      if (info && info.identifier) {
-        if (!info.scope) {
-          info.scope = Scope.Request;
+      const component: IComponent = module[FACTORY_PROVIDER];
+      if (component && component.identifier) {
+        if (!component.scope) {
+          component.scope = Scope.Request;
         }
         const uuid = generateUUID();
-        this.identifierRelation.saveFactoryRelation(info.identifier, uuid);
+        this.identifierRelation.saveFactoryRelation(component.identifier, uuid);
         this.register(uuid, module, {
-          scope: info.scope,
+          scope: component.scope,
           namespace: options.namespace,
-          _target: options._target,
+          target: options.target,
         });
       }
     }

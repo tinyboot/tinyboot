@@ -4,6 +4,7 @@ import { IFieldsDefinition } from './fields.definition';
 import { IFieldDefinition } from './field.definition';
 import { IMethodsDefinition } from './methods.definition';
 import { IMethodDefinition } from './method.definition';
+import { BeanType } from '../../enums/bean-type.enum';
 
 export interface IBeanDefinition<T extends IFieldDefinition, M extends IMethodDefinition> {
   /**
@@ -37,11 +38,29 @@ export interface IBeanDefinition<T extends IFieldDefinition, M extends IMethodDe
    */
   name: string;
   /**
+   * bean type
+   * @type {BeanType}
+   * @memberof IBeanDefinition
+   */
+  type: BeanType;
+  /**
+   * bean is async
+   * @type boolean
+   * @memberOf IBeanDefinition
+   */
+  asynchronous: boolean;
+  /**
    * bean target
    * @type {*}
    * @memberof IBeanDefinition
    */
-  _target: any;
+  target: any;
+  /**
+   * bean path
+   * @type {string}
+   * @memberof IBeanDefinition
+   */
+  path: string;
   /**
    * inject fields
    * @type {IFieldsDefinition<T extends IFieldDefinition>}
@@ -54,6 +73,12 @@ export interface IBeanDefinition<T extends IFieldDefinition, M extends IMethodDe
    * @memberof IBeanDefinition
    */
   methods: IMethodsDefinition<M>;
+  /**
+   * register hook
+   * @param target
+   * @param options
+   */
+  registerHook?: (target: any, options?: Partial<IBeanDefinition<IFieldDefinition, IMethodDefinition>>) => void;
   isAsync(): boolean;
   isSingletonScope(): boolean;
   isRequestScope(): boolean;

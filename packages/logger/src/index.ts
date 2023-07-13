@@ -1,4 +1,7 @@
-import { template } from './utils';
-
-const dataT = '我是出书${test}';
-console.log(template.render(dataT, { test: '哈哈哈' }));
+export * from './logger';
+export * from './winston/logger';
+export * from './constant';
+export * from './factory';
+export * from './format';
+export * from './interface';
+export * from './utils';

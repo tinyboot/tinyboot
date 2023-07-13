@@ -1,16 +1,10 @@
 import { Transport, WinstonLogger } from '../winston/logger';
-import {
-  IGenericChildLogger,
-  IGenericContextLogger,
-  IGenericLogger,
-  Level,
-  LoggerOptions,
-} from '../interface';
+import { IGenericChildLogger, IGenericContextLogger, IGenericLogger, Level, LoggerOptions } from '../interface';
 import * as util from 'util';
 import { formatLevel, isPlainObject } from '../utils';
 import { ORIGIN_ARGS, ORIGIN_ERROR } from '../constant';
 import { format } from 'winston';
-import { displayCommonMessage, displayLabels } from '../fomat';
+import { displayCommonMessage, displayLabels } from '../format';
 
 const LogLevels = {
   off: 0,
@@ -113,10 +107,7 @@ export class GenericLogger extends WinstonLogger implements IGenericLogger {
   }
 
   write(...args): boolean {
-    if (
-      (args.length === 1 && typeof args[0] !== 'object') ||
-      !args[0]['level']
-    ) {
+    if ((args.length === 1 && typeof args[0] !== 'object') || !args[0]['level']) {
       // 这里必须要用 none
       return super.log.apply(this, ['trace', ...args, { ignoreFormat: true }]);
     } else {

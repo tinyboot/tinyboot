@@ -5909,15 +5909,15 @@ typedarray@^0.0.6:
   resolved "https://registry.npmmirror.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
+typescript@5.2.0-dev.20230713:
+  version "5.2.0-dev.20230713"
+  resolved "https://registry.npmmirror.com/typescript/-/typescript-5.2.0-dev.20230713.tgz#44318e5521b8b60d9d835f52bdb80ad76745c4bb"
+  integrity sha512-A/crla7nXo4d7TVRlV4CUzxW218b2WupUrIMnnGBV1o0SQnckrszm0CUMRAYeKAB9lFIo/B1Gx1cBdvNQYiD4A==
+
 "typescript@>=3 < 6":
   version "5.1.6"
   resolved "https://registry.npmmirror.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
-
-typescript@^5.2.0-beta:
-  version "5.2.0-dev.20230709"
-  resolved "https://registry.npmmirror.com/typescript/-/typescript-5.2.0-dev.20230709.tgz#59ab4b5c4768d16a45d81b367337b156a991e103"
-  integrity sha512-5t8YdsfgmOchjqTAAKmSWAwHwUURpdquE+HzENLRZXpwBHklFoipu/KoC6W7TiVz2/8FcjjFjq8ABDGttwAQ1w==
 
 uglify-js@^3.1.4:
   version "3.17.4"
